@@ -1,0 +1,17 @@
+{% extends 'home_page_template/base.html' %}     {% block title %}Home{% endblock %}
+
+{% block content %}
+
+
+<div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+    
+    
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'home_page_template/base.html' %} {% block title %}{{ thread.title }}{% endblock %}
+
+{% block content %}
+
+
+    <p>PK: {{ thread.pk }}</p>
+    <p>Title: {{ thread.title }}</p>
+    <p>Description: {{ thread.description }}</p>
+    <br>
+    
+    <a href="{% url 'add-comment' thread.pk %}">add comment</a>
+    
+    <br><br><br>
+    <hr>
+    {% for comment in comments %}
+        <p>Comment: {{ comment.text }}</p>
+        <p>Comm by: {{ comment.commentator }}</p>
+        <br>
+    {% endfor %}
+
+{% endblock %}

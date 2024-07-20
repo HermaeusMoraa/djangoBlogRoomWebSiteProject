@@ -1,0 +1,43 @@
+<div class="topnav">
+    <a href="{% url 'home-page' %}" class="active">LOGO</a>
+    <a href="{% url 'home-page' %}">Home</a>
+    <div class="">
+        <div>
+            {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="dropbtn">Account
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'dashboard' %}">Profile</a>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="dropdown">
+                    <button class="dropbtn">Join
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'signup' %}">Sign up</a>
+                        <a href="{% url 'login' %}">Login</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="dropbtn">Creat
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'thread-create' %}">Content</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,14 @@
+{% extends 'home_page_template/base.html' %}     {% block title %}Add Comment{% endblock %}
+
+{% block content %}
+
+
+<h1>{{ thread_comment.title }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
+

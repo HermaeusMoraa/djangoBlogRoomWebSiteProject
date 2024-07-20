@@ -1,0 +1,25 @@
+{% extends 'home_page_template/base.html' %}     {% block title %}Home{% endblock %}
+
+{% block content %}
+    <div>
+        {% for thread in all_threads %}
+            <p>Title: {{ thread.title }}</p>
+            <p>Description: {{ thread.description }}</p>
+            <p>PK: {{ thread.pk }}</p>
+            <p>Category: {{ thread.category }}</p>
+            <p>CategoryID: {{ thread.category_id }}</p>
+            <p>Tag: {{ thread.tags }}</p>
+            <p>Created by: {{ thread.creator }}</p>
+            <div>
+                {% for tag in thread.tags.all %}
+                    <p>Tag: {{ tag }}</p>
+                {% endfor %}
+            </div>
+            <a href="{% url 'thread-detail' thread.pk %}">
+                <button>View</button>
+            </a>
+            <hr>
+        {% endfor %}
+    </div>
+
+{% endblock %}
