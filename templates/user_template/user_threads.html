@@ -1,0 +1,19 @@
+{% extends 'home_page_template/base.html' %}{% block title %}My posts{% endblock %}
+
+{% block content %}
+
+    {% if threads_user %}
+        <ul>
+            {% for thread in threads_user %}
+                <li>
+                    <a href="{% url 'thread-detail' thread.pk %}">{{ thread.title }}</a> - {{ thread.created_at }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no posts.</p>
+        <p>But you can create one <a href="{% url 'thread-create' %}">here</a></p>
+    {% endif %}
+    
+    
+{% endblock %}

@@ -6,9 +6,9 @@
 
     <h2>Dashboard</h2>
     <p>Welcome, {{ user.username }}</p>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
+    <br>
+    <hr>
+    <a href="{% url 'user-account' %}">My Account</a><br>
+    <a href="{% url 'user-profile' %}">My Profile</a><br>
+    <a href="{% url 'user-threads' %}">My Posts</a>
 {% endblock %}

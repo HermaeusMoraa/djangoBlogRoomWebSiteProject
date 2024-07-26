@@ -1,0 +1,12 @@
+{% extends 'home_page_template/base.html' %}{% block title %}{% endblock %}
+
+{% block content %}
+
+    <h1>Update post: {{ thread_update.title }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+    
+{% endblock %}

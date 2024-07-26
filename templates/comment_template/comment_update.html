@@ -1,0 +1,12 @@
+{% extends 'home_page_template/base.html' %}
+
+{% block content %}
+
+    <h1>Update Comment</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update Comment</button>
+        </form>
+    
+{% endblock %}

@@ -10,11 +10,9 @@
             <p>CategoryID: {{ thread.category_id }}</p>
             <p>Tag: {{ thread.tags }}</p>
             <p>Created by: {{ thread.creator }}</p>
-            <div>
-                {% for tag in thread.tags.all %}
-                    <p>Tag: {{ tag }}</p>
-                {% endfor %}
-            </div>
+            <p>Created at: {{ thread.created_at }}</p>
+            <p>Updated at: {{ thread.updated_at }}</p>
+            
             <a href="{% url 'thread-detail' thread.pk %}">
                 <button>View</button>
             </a>

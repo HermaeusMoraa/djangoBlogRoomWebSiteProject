@@ -2,20 +2,27 @@
 
 {% block content %}
 
-
-    <p>PK: {{ thread.pk }}</p>
-    <p>Title: {{ thread.title }}</p>
-    <p>Description: {{ thread.description }}</p>
-    <br>
     
-    <a href="{% url 'add-comment' thread.pk %}">add comment</a>
-    
-    <br><br><br>
-    <hr>
-    {% for comment in comments %}
-        <p>Comment: {{ comment.text }}</p>
-        <p>Comm by: {{ comment.commentator }}</p>
+        <p>PK: {{ thread.pk }}</p>
+        <p>Title: {{ thread.title }}</p>
+        <p>Description: {{ thread.description }}</p>
         <br>
+        {% if request.user == thread.creator %}
+            <a href="{% url 'thread-update' thread.pk %}">Update</a>
+            <br>
+            <a href="{% url 'thread-delete' thread.pk %}">Delete</a>
+        {% endif %}
+        <br><br>
+        <a href="{% url 'add-comment' thread.pk %}">add comment</a>
+        
+        
+        <br><br><br>
+        <hr>
+        {% for comment in comments %}
+            <p>Comment: {{ comment.text }}</p>
+            <p>Comm by: {{ comment.commentator }}</p>
+            <a href="{% url 'update-comment' comment.pk %}">Update</a>
+            <br>
     {% endfor %}
 
 {% endblock %}

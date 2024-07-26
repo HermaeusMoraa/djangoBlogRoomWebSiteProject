@@ -1,0 +1,12 @@
+{% extends 'home_page_template/base.html' %}{% block title %}My Account{% endblock %}
+
+{% block content %}
+
+    <h1>My information</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{% url 'dashboard' %}">Back</a>
+    </form>
+{% endblock %}
