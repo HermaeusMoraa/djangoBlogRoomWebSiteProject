@@ -37,6 +37,7 @@ class ThreadDetailView(DetailView):
 		context = super().get_context_data(**kwargs)
 		context['form'] = CommentForm()
 		context['comments'] = CommentModel.objects.filter(thread_link=self.object)
+		context['user_liked'] = self.request.user in self.object.likes.all()
 		return context
 
 
@@ -86,7 +87,7 @@ def add_comment(request, pk):
 		if form.is_valid():
 			comment = form.save(commit=False)
 			comment.thread_link = thread
-			comment.commentator = request.user
+			comment.user = request.user
 			comment.save()
 			return redirect('thread-detail', pk=thread.pk)
 	else:
@@ -102,12 +103,12 @@ class CommentUpdateView(LoginRequiredMixin, View):
 	login_url = 'login'
 
 	def get(self, request, pk, *args, **kwargs):
-		comment = get_object_or_404(CommentModel, pk=pk, commentator=request.user)
+		comment = get_object_or_404(CommentModel, pk=pk, user=request.user)
 		form = CommentForm(instance=comment)
 		return render(request, self.template_name, {'form':form})
 
 	def post(self, request, pk, *args, **kwargs):
-		comment = get_object_or_404(CommentModel, pk=pk, commentator=request.user)
+		comment = get_object_or_404(CommentModel, pk=pk, user=request.user)
 		form = CommentForm(request.POST, instance=comment)
 		if form.is_valid():
 			form.save()

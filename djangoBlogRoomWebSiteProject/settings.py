@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'user_app',
     'thread_app',
     'room_app',
+    'feature_app',
+
 
     # external apps
     'taggit',
