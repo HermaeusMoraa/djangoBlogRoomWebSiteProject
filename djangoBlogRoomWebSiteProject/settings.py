@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'home_app',
     'user_app',
     'thread_app',
-    'room_app',
     'feature_app',
 
 

@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
 
+from feature_app.models import SavedThreadModel
 from thread_app.models import ThreadModel
 from .forms import CustomUserCreationForm, LoginForm, CustomUserAccountChangeForm, CustomUserProfileChangeForm
 from django.contrib.auth import login, authenticate, logout
@@ -105,5 +106,16 @@ class UserProfileView(LoginRequiredMixin, View):
 			form.save()
 			return redirect('user-profile')
 		return render(request, self.template_name, {'form': form})
+
+
+
+def saved_threads(request):
+	saved_threads = SavedThreadModel.objects.filter(user=request.user)
+	return render(request, 'user_template/user_threads_save.html', {'saved_threads': saved_threads})
+
+
+
+
+
 
 

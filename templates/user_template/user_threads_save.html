@@ -1,0 +1,14 @@
+{% extends 'home_page_template/base.html' %}{% block title %}My saved posts{% endblock %}
+
+{% block content %}
+
+    <h1>Saved Posts</h1>
+    <ul>
+        {% for saved_thread in saved_threads %}
+            <li><a href="{% url 'thread-detail' saved_thread.pk %}">{{ saved_thread.thread_link.title }}</a></li>
+        {% empty %}
+            <li>You haven't saved any posts yet.</li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

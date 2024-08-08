@@ -3,59 +3,97 @@
 {% block content %}
 
     
-        <p>PK: {{ thread.pk }}</p>
-        <p>Title: {{ thread.title }}</p>
-        <p>Description: {{ thread.description }}</p>
-        <br>
-        {% if request.user == thread.creator %}
-            <a href="{% url 'thread-update' thread.pk %}">Update</a>
-            <br>
-            <a href="{% url 'thread-delete' thread.pk %}">Delete</a>
+    <p>PK: {{ thread.pk }}</p>
+    <p>Title: {{ thread.title }}</p>
+    <p>Description: {{ thread.description }}</p>
+    <br>
+{#    <a href="{% url 'toggle-save-thread' thread.pk %}">Save Post</a>#}
+    <button id="save-button" data-url="{% url 'toggle-save-thread' thread.pk %}">
+        {% if request.user in thread.saved_threads.all %}
+            Unsave
+        {% else %}
+            Save
         {% endif %}
-        <br><br>
+    </button>
+    {% if request.user == thread.creator %}
+        <a href="{% url 'thread-update' thread.pk %}">Update</a>
+        <br>
+        <a href="{% url 'thread-delete' thread.pk %}">Delete</a>
+    {% endif %}
+    <br><br>
+    {% if user.is_authenticated %}
         <a href="{% url 'add-comment' thread.pk %}">add comment</a>
-{#        <button id="like-button" data-liked="{{ user in thread.likes.all }}" data-url="{% url 'toggle-thread-like' thread.pk %}">#}
-            {% if user.is_authenticated %}
-                <button id="like-button" data-liked="{{ user in thread.likes.all }}">{{ thread.likes.all|yesno:"Unlike,Like" }}</button>
+        
+        <button id="like-button" data-liked="{{ user_liked }}" data-url="{% url 'toggle-thread-like' thread.pk %}">
+            {% if user in thread.likes.all %}
+                Unlike
             {% else %}
-                <p><a href="{% url 'login' %}">Log in</a> to like this post.</p>
+                Like
             {% endif %}
-{#        </button>#}
-        <p>Likes: <span id="like-count">{{ post.like_count }}</span></p>
-        
-        <br><br><br>
-        <hr>
-        {% for comment in comments %}
-            <p>Comment: {{ comment.text }}</p>
-            <p>Comm by: {{ comment.user }}</p>
-            <a href="{% url 'update-comment' comment.pk %}">Update</a>
-            <br>
-        
-        
-      <script>
-        $(document).ready(function() {
-          $('#like-button').click(function() {
-            var button = $(this);
-            var url = "{% url 'toggle-thread-like' thread.pk %}";
-    
-            $.ajax({
-              url: url,
-              method: 'POST',
-              headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-              },
-              success: function(response) {
-                button.data('liked', response.liked);
-                button.text(response.liked ? 'Unlike' : 'Like');
-                $('#like-count').text(response.like_count);
-              },
-              error: function() {
-                alert('An error occurred. Please try again.');
-              }
-            });
-          });
-        });
-      </script>
+        </button>
+    {% else %}
+        <p><a href="{% url 'login' %}">Log in</a> to like this post.</p>
+    {% endif %}
+    <p>Likes: <span id="like-count">{{ thread.like_count }}</span></p>
+
+    <br><br><br>
+    <hr>
+
+    {% for comment in comments %}
+        <p>Comment: {{ comment.text }}</p>
+        <p>Comm by: {{ comment.user }}</p>
+        <a href="{% url 'update-comment' comment.pk %}">Update</a>
+        <a href="{% url 'toggle-comment-like' comment.pk %}">Like</a>
+        <p>Comm Likes: {{ comment.like_count }}</p>
+        <br>
     {% endfor %}
+
+    <script>
+        $(document).ready(function () {
+            $('#like-button').click(function () {
+                var button = $(this);
+                var url = "{% url 'toggle-thread-like' thread.pk %}";
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                        button.data('liked', response.liked);
+                        button.text(response.liked ? 'Unlike' : 'Like');
+                        $('#like-count').text(response.like_count);
+                    },
+                    
+                    error: function () {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#save-button').click(function () {
+                var button = $(this);
+                var url = button.data('url');
+    
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                        button.text(response.saved ? 'Unsave' : 'Save');
+                    },
+                    error: function () {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
 
 {% endblock %}
