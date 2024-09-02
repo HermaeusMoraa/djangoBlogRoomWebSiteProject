@@ -1,0 +1,42 @@
+{% extends 'home_page_template/base.html' %}     {% block title %}Home{% endblock %}
+
+{% block content %}
+
+    {##}
+    {#    <div class="container" style="width: 700px">#}
+    {#        <div class="center">#}
+    {#                <div class="card text-center">#}
+    {#                    <div class="card-header">#}
+    {#                        <ul class="nav nav-tabs card-header-tabs">#}
+    {#                            <li class="nav-item">#}
+    {#                                <a class="nav-link active" aria-current="true" href="{% url 'thread-create' %}">Text#}
+    {#                                    Post</a>#}
+    {#                            </li>#}
+    {#                            <li class="nav-item">#}
+    {#                                <a class="nav-link" aria-selected="true" href="{% url 'thread-image-create' %}">Image#}
+    {#                                    Post</a>#}
+    {#                            </li>#}
+    {#                        </ul>#}
+    {#                    </div>#}
+    {#                    <div class="card-body">#}
+    {#                        <h5 class="card-title">Create Post</h5>#}
+    {#                        <form method="post">#}
+    {#                            {% csrf_token %}#}
+    {#                            {{ form.as_p }}#}
+    {#                            <input type="submit" value="Submit"/>#}
+    {#                        </form>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+   
+
+
+
+{% endblock %}

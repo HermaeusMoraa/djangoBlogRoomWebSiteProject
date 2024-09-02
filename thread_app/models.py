@@ -38,7 +38,8 @@ class CategoryModel(models.Model):
 class ThreadModel(TimeStampedModel):
 
 	title = models.CharField(max_length=100)
-	description = models.TextField(max_length=1000)
+	description = models.TextField(max_length=1000, blank=True, null=True)
+	image = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True, null=True)
 
 	#FK
 	creator = models.ForeignKey(CustomUserAccountModel, on_delete=models.CASCADE)

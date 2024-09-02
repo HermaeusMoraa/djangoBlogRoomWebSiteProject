@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
-from .forms import ThreadForm, CommentForm
+from .forms import ThreadForm, ThreadImageForm, CommentForm
 from .models import ThreadModel, CommentModel
 
 # Thread Logic
@@ -24,6 +24,20 @@ def thread_create_view(request):
 	else:
 		form = ThreadForm()
 	return render(request, 'thread_template/thread_create.html', {'form':form})
+
+
+@login_required
+def thread_image_create_view(request):
+	if request.method == 'POST':
+		form = ThreadImageForm(request.POST)
+		if form.is_valid():
+			post = form.save(commit=False)
+			post.creator = request.user
+			post.save()
+			return redirect('home-page')
+	else:
+		form = ThreadImageForm()
+	return render(request, 'thread_template/thread_image_create.html', {'form':form})
 
 
 

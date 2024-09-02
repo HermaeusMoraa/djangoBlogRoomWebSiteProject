@@ -13,6 +13,14 @@ class ThreadForm(ModelForm):
 
 
 
+class ThreadImageForm(ModelForm):
+	class Meta:
+		model = ThreadModel
+		fields = ['category', 'title', 'image', 'tags']
+
+
+
+
 class CommentForm(ModelForm):
 	class Meta:
 		model = CommentModel

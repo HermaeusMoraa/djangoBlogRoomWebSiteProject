@@ -3,19 +3,57 @@
 {% block content %}
     <div>
         {% for thread in all_threads %}
-            <p>Title: {{ thread.title }}</p>
-            <p>Description: {{ thread.description }}</p>
-            <p>PK: {{ thread.pk }}</p>
-            <p>Category: {{ thread.category }}</p>
-            <p>CategoryID: {{ thread.category_id }}</p>
-            <p>Tag: {{ thread.tags }}</p>
-            <p>Created by: {{ thread.creator }}</p>
-            <p>Created at: {{ thread.created_at }}</p>
-            <p>Updated at: {{ thread.updated_at }}</p>
-            
-            <a href="{% url 'thread-detail' thread.pk %}">
-                <button>View</button>
-            </a>
+
+            <div class="container d-flex justify-content-center align-items-center">
+                <div class="card" style="width: 30rem;">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-body-secondary"><i
+                                class="fa-solid fa-tags"></i><u><b>{{ thread.category }}</b></u></h6>
+                        <h3 class="card-title">{{ thread.title }}</h3>
+                    
+                        <img src="{{ thread.image }}" alt="" class="mr-3">
+                    
+                        <p class="card-text">{{ thread.description }}</p>
+                        {% if user.is_authenticated %}
+                            <button type="button" class="btn btn-light" id="like-button" data-liked="{{ user_liked }}"
+                                    data-url="{% url 'toggle-thread-like' thread.pk %}">
+                                {% if user in thread.likes.all %}
+                                    <i class="fa-solid fa-thumbs-up"></i> Unlike
+                                {% else %}
+                                    <i class="fa-solid fa-thumbs-up"></i> Like
+                                {% endif %}
+                            </button>
+
+                            <a href="{% url 'add-comment' thread.pk %}" type="button" class="btn btn-light">Comment</a>
+
+                            <button type="button" class="btn btn-light" id="save-button"
+                                    data-url="{% url 'toggle-save-thread' thread.pk %}">
+                                <i class="fa-solid
+                                    {% if request.user in thread.saved_threads.all %}
+                                        fa-bookmark
+                                    {% else %}
+                                        fa-bookmark
+                                    {% endif %}">
+                                </i>
+                                <span id="save-text">
+                                    {% if request.user in thread.saved_threads.all %}
+                                        Unsave
+                                    {% else %}
+                                        Save
+                                    {% endif %}
+                                </span>
+                            </button>
+                        {% endif %}
+                        <p>Likes: <span id="like-count">{{ thread.like_count }}</span></p>
+                        Created by: {{ thread.creator }}
+                        <a href="{% url 'thread-detail' thread.pk %}">
+                            <button>View</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
             <hr>
         {% endfor %}
     </div>

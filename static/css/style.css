@@ -1,0 +1,8 @@
+{% load static%}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+

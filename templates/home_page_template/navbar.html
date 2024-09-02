@@ -1,43 +1,48 @@
-<div class="topnav">
-    <a href="{% url 'home-page' %}" class="active">LOGO</a>
-    <a href="{% url 'home-page' %}">Home</a>
-    <div class="">
-        <div>
-            {% if user.is_authenticated %}
-                <div class="dropdown">
-                    <button class="dropbtn">Account
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="{% url 'dashboard' %}">Dashboard</a>
-                        <a href="{% url 'logout' %}">Logout</a>
-                    </div>
-                </div>
-            {% else %}
-                <div class="dropdown">
-                    <button class="dropbtn">Join
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="{% url 'signup' %}">Sign up</a>
-                        <a href="{% url 'login' %}">Login</a>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-        <div>
-            {% if user.is_authenticated %}
-                <div class="dropdown">
-                    <button class="dropbtn">Create
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="{% url 'thread-create' %}">Content</a>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
 
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home-page' %}">VisionWard</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'home-page' %}">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'thread-create' %}">
+                            <i class="fa-solid fa-feather fa-sm"></i> Post
+                        </a>
+                        <a class="nav-link" href="{% url 'thread-image-create' %}">
+                                <i class="fa-solid fa-feather fa-sm"></i> Image Post
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Login
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'signup' %}">Sign up</a></li>
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-
-</div>
+</nav>
